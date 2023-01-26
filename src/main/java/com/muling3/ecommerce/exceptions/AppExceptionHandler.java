@@ -21,4 +21,17 @@ public class AppExceptionHandler {
         return errorsResponse;
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(CustomerNotFoundException.class)
+    public Map<String, String> catchCustomerBoundException(CustomerNotFoundException ex){
+
+        System.out.println("Inside CustomerNotFoundException");
+
+        Map<String, String> errorsResponse = new HashMap<>();
+        errorsResponse.put("status", "FAILED");
+        errorsResponse.put("error", ex.getMessage());
+
+        return errorsResponse;
+    }
+
 }
