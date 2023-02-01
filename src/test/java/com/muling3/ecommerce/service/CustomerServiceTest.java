@@ -33,7 +33,7 @@ class CustomerServiceTest {
                 .id(102L)
                 .userName("George Boole")
                 .email("george.boole@gmail.com")
-                .password("12345")
+                .userPassword("12345")
                 .carts(List.of(new Cart(1L, "cassava", 10,20.00, null, false, "This is dummy description"), new Cart(null, "mango", 5, 10.00,null, false, "This is dummy description"), new Cart(null, "oranges", 2, 5.00, null,false, "This is dummy description")))
                 .build();
     }
@@ -44,7 +44,7 @@ class CustomerServiceTest {
         when(repository.save(customer)).thenReturn(customer);
         Customer customer1 = service.saveCustomer(customer);
 
-        assertEquals("George Boole", customer1.getUserName());
+        assertEquals("George Boole", customer1.getUsername());
         assertEquals(102L, customer1.getId());
     }
 
@@ -63,7 +63,7 @@ class CustomerServiceTest {
         Customer customer1 = service.getCustomerById(102L);
 
         assertEquals(102L, customer1.getId());
-        assertEquals("George Boole", customer1.getUserName());
+        assertEquals("George Boole", customer1.getUsername());
     }
 
     @Test
@@ -85,7 +85,7 @@ class CustomerServiceTest {
         Customer customer1 = service.getCustomerByEmail("george.boole@gmail.com");
 
         assertEquals(102L, customer1.getId());
-        assertEquals("George Boole", customer1.getUserName());
+        assertEquals("George Boole", customer1.getUsername());
         assertEquals("george.boole@gmail.com", customer1.getEmail());
     }
     @Test
@@ -107,7 +107,7 @@ class CustomerServiceTest {
         Customer customer1 = service.getCustomerByName("George Boole");
 
         assertEquals(102L, customer1.getId());
-        assertEquals("George Boole", customer1.getUserName());
+        assertEquals("George Boole", customer1.getUsername());
     }
 
     @Test

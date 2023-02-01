@@ -50,7 +50,7 @@ class CustomerControllerTest {
                 .id(102L)
                 .userName("Roy Fielding")
                 .email("roy.fielding@hotmail.com")
-                .password("12345")
+                .userPassword("12345")
                 .carts(cartList)
                 .build();
     }

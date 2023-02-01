@@ -34,7 +34,7 @@ public class EmailConfirmationService {
         helper.setTo(recipient);
         helper.setSubject(subject);
 
-        body = body.replace("[[name]]", customer.getUserName());
+        body = body.replace("[[name]]", customer.getUsername());
         body = body.replace("[[link]]", link);
 
         helper.setText(body, true);

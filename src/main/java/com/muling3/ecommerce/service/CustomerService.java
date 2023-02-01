@@ -8,6 +8,9 @@ import com.muling3.ecommerce.repositories.CustomerRepository;
 import com.muling3.ecommerce.repositories.EmailConfirmationRepository;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -15,7 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerService {
+public class CustomerService{
 
     private final CustomerRepository customerRepository;
 
@@ -165,7 +168,7 @@ public class CustomerService {
     public void resetCustomerPassword(String userEmail, String newPassword) throws CustomerNotFoundException {
         Optional<Customer> customer = customerRepository.findByEmail(userEmail);
         if (customer.isPresent()){
-            customer.get().setPassword(newPassword);
+            customer.get().setUserPassword(newPassword);
             customerRepository.save(customer.get());
         }else {
             throw new CustomerNotFoundException("Customer Not Found");
