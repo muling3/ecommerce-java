@@ -29,8 +29,7 @@ public class CustomerController {
         this.customerService = service;
     }
 
-    @PostMapping
-    public ResponseEntity<?> createCustomer(@RequestBody Customer customer, HttpServletRequest request) {
+    public ResponseEntity<?> createCustomer(Customer customer, HttpServletRequest request) {
         Customer c = customerService.saveCustomer(customer);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getId()).toUri();
 
@@ -40,20 +39,14 @@ public class CustomerController {
     }
 
     private String createAppUrl(HttpServletRequest request) {
-        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getServletPath();
+        return "http://" + request.getServerName() + ":" + request.getServerPort() + "/api/auth";
     }
 
-    @GetMapping("/confirmEmail")
-    public ResponseEntity<String> confirmCustomerRegistrationEmail(@RequestParam String token) {
-        Boolean isValid = customerService.validateCustomerToken(token);
-        if (!isValid) {
-            return ResponseEntity.badRequest().body("Invalid token");
-        }
-        return ResponseEntity.ok("Email successfully confirmed");
+    public Boolean confirmCustomerRegistrationEmail(String token) {
+        return customerService.validateCustomerToken(token);
     }
 
-    @GetMapping("/resendConfirmation")
-    public ResponseEntity resendEmailConfirmation(@RequestParam String email, HttpServletRequest request) throws CustomerNotFoundException {
+    public ResponseEntity<String> resendEmailConfirmation(@RequestParam String email, HttpServletRequest request) throws CustomerNotFoundException {
         String link = customerService.resendConfirmationEmailLink(email, createAppUrl(request));
 
         if(link == null){
@@ -63,7 +56,6 @@ public class CustomerController {
         return ResponseEntity.ok(link);
     }
 
-    @PostMapping("/resetPassword")
     public ResponseEntity<String> resetPassword(@RequestBody ResetRequest resetRequest) throws CustomerNotFoundException {
         customerService.resetCustomerPassword(resetRequest.getUserEmail(), resetRequest.getNewPassword());
         return ResponseEntity.ok("Password reset successfully");

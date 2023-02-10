@@ -22,10 +22,10 @@ public class EmailConfirmationService {
         String subject = "Email Verification from Spring Ecommerce. Please verify";
         String body = "Dear [[name]].<br/>"
                 + "Please click the link below to verify your registration: <br/>"
-                + "<h3><a href=\"[[link]]\" target=\"_self\">Confirm Email</a></h3>"
-                + "Thank you for creating account with us</br>"
-                + "Enjoy our services </br>"
-                + "BY Alexander Muli";
+                + "<h3><a href=\"[[link]]\" target=\"_self\">Confirm Email</a></h3> <br/>"
+                + "Thank you for creating account with us <br/>"
+                + "Enjoy our services <br/><br/>"
+                + "By Alexander Muli";
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
@@ -34,7 +34,7 @@ public class EmailConfirmationService {
         helper.setTo(recipient);
         helper.setSubject(subject);
 
-        body = body.replace("[[name]]", customer.getUsername());
+        body = body.replace("[[name]]", customer.getUserName());
         body = body.replace("[[link]]", link);
 
         helper.setText(body, true);

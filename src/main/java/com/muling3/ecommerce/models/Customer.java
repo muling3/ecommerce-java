@@ -3,11 +3,6 @@ package com.muling3.ecommerce.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,7 +13,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "customer")
-public class Customer implements UserDetails {
+public class Customer  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -40,33 +35,5 @@ public class Customer implements UserDetails {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private List<Cart> carts;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
-    public String getPassword() {
-        return userPassword;
-    }
-
-    @Override
-    public String getUsername() {
-        return userName;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return enabled;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+    private String roles;
 }
